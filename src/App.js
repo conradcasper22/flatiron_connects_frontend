@@ -33,6 +33,10 @@ class App extends Component {
 
 
   componentDidMount() {
+    this.fetchData()
+  }
+
+  fetchData = () => {
     fetch(BaseURL + 'cohorts')
     .then(resp => resp.json())
     .then(cohortList => this.setState({cohorts: cohortList}))
@@ -53,11 +57,11 @@ class App extends Component {
     }
   
   addUser = (newUser) => {
-    this.setState({users: [...this.state.users], newUser})
+    this.setState({ ...this.state, users: [ ...this.state.users, newUser ] })
   }
 
   addCohort = (newCohort) => {
-    this.setState({cohorts: [...this.state.cohorts], newCohort})
+    this.setState({ ...this.state, cohorts: [ ...this.state.cohorts, newCohort ] })
   }
 
   checkLogin = () => {
@@ -75,11 +79,6 @@ class App extends Component {
       cohortFilter: value
     })
   }
-  //   this.setState({
-  //     cohortFilter: value,
-  //     cohortIsLoading: true
-  //   })
-  // }
 
   getFilteredCohorts = () => {
     return this.state.cohorts.filter((cohort) => cohort.location.toLowerCase().includes(this.state.cohortFilter.toLowerCase()))
@@ -113,7 +112,7 @@ class App extends Component {
       })
     })
     .then(res => res.json())
-    .then(console.log)
+    .then(this.fetchData())
   }
 
   render() {
@@ -124,7 +123,7 @@ class App extends Component {
           <Route path='/logout' render={() => (<Logout/>)}/>
           <Route path='/login' render={() => (<Login/>)}/>
           <Route path='/userform' render={(props) => (<UserForm {...props} addUser={this.addUser} />)}/>
-          <Route path='/cohortform' render={(props) => (<CohortForm{...props} addCohort={this.addCohort}/>)}/>
+          <Route path='/cohortform' render={(props) => ( <CohortForm {...props} addCohort={this.addCohort} fetchData={ this.fetchData }/> )}/>
           <Route path='/cohorts' 
             render={(props) => (
               <CohortsContainer 
