@@ -13,7 +13,7 @@ A site for Flatiron Alum to keep in contact with each other throughout their tim
 ## Technologies
 
 - React.JS
-- React Routes
+- React Router
 - Ruby on Rails, [link to API repository](https://github.com/conradcasper22/mod_4_project_backend)
 - Semantic UI React
 
